@@ -1,15 +1,15 @@
 {
-  "main.css": "/modoki-nerdle/static/css/main.7c56dacf.chunk.css",
-  "main.js": "/modoki-nerdle/static/js/main.8e46d270.chunk.js",
-  "main.js.map": "/modoki-nerdle/static/js/main.8e46d270.chunk.js.map",
+  "main.css": "/modoki-nerdle/static/css/main.6d667700.chunk.css",
+  "main.js": "/modoki-nerdle/static/js/main.10e9c8c2.chunk.js",
+  "main.js.map": "/modoki-nerdle/static/js/main.10e9c8c2.chunk.js.map",
   "static/js/1.7ab2393a.chunk.js": "/modoki-nerdle/static/js/1.7ab2393a.chunk.js",
   "static/js/1.7ab2393a.chunk.js.map": "/modoki-nerdle/static/js/1.7ab2393a.chunk.js.map",
   "static/js/2.24d98da4.chunk.js": "/modoki-nerdle/static/js/2.24d98da4.chunk.js",
   "static/js/2.24d98da4.chunk.js.map": "/modoki-nerdle/static/js/2.24d98da4.chunk.js.map",
   "runtime~main.js": "/modoki-nerdle/static/js/runtime~main.2efb3539.js",
   "runtime~main.js.map": "/modoki-nerdle/static/js/runtime~main.2efb3539.js.map",
-  "static/css/main.7c56dacf.chunk.css.map": "/modoki-nerdle/static/css/main.7c56dacf.chunk.css.map",
+  "static/css/main.6d667700.chunk.css.map": "/modoki-nerdle/static/css/main.6d667700.chunk.css.map",
   "index.html": "/modoki-nerdle/index.html",
-  "precache-manifest.b1d32ad83221207895de2ad4869a203a.js": "/modoki-nerdle/precache-manifest.b1d32ad83221207895de2ad4869a203a.js",
+  "precache-manifest.e7ae379f16c90bdd6afe10462c2f6434.js": "/modoki-nerdle/precache-manifest.e7ae379f16c90bdd6afe10462c2f6434.js",
   "service-worker.js": "/modoki-nerdle/service-worker.js"
 }
