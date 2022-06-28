@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "10e9c8c22483bda4bac4",
-    "url": "/modoki-nerdle/static/css/main.6d667700.chunk.css"
+    "revision": "6b716301a063de701dae",
+    "url": "/modoki-nerdle/static/css/main.29dcd750.chunk.css"
   },
   {
-    "revision": "10e9c8c22483bda4bac4",
-    "url": "/modoki-nerdle/static/js/main.10e9c8c2.chunk.js"
+    "revision": "6b716301a063de701dae",
+    "url": "/modoki-nerdle/static/js/main.6b716301.chunk.js"
   },
   {
     "revision": "7ab2393a9ad8c2b58dcd",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/modoki-nerdle/static/js/runtime~main.2efb3539.js"
   },
   {
-    "revision": "be5cc2adf268c34cb7dbc947f05af5a8",
+    "revision": "a58e9aed74d149125fd5a66448739935",
     "url": "/modoki-nerdle/index.html"
   }
 ];

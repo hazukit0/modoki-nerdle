@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/modoki-nerdle/precache-manifest.e7ae379f16c90bdd6afe10462c2f6434.js"
+  "/modoki-nerdle/precache-manifest.712e680b3819373caa05704d8c254291.js"
 );
 
 workbox.clientsClaim();
