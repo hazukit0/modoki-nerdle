@@ -30,5 +30,5 @@ https://yarnpkg.com/
 - Color the numeric control panel
 - Create a callout for game message
 - Pop-up dialog
-- Consider the server-side logic.
+- Consider the server-side logic. (Whether data should be placed in local storage or server-side)
 - Separation of server-side and front-end logic
