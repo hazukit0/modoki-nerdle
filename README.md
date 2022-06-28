@@ -1,14 +1,19 @@
 # modoki-nerdle
 
-This is my first project with React. Yay!
+This is my first project with React. Yay!<br>
 I plan to make something nerdle-like.
+
 ※ Please let me know if there are any copyright or other issues. I will remove this.
 
 Demo is [here](https://hazukit0.github.io/modoki-nerdle/).
 
-First of all, we made the front.
+First of all, I made the front.
 
 ## Getting started
+
+This is React project. <br>
+Node.js version: 18.4.0
+
 If you want to run it on your pc, as shown below
 
     cd [project-folder]
