@@ -37,3 +37,4 @@ https://yarnpkg.com/
 - Statistics data
 - Game data in play (For browser reload)
 - Game data in play (For export and inport)
+- Answer to the question
