@@ -32,3 +32,8 @@ https://yarnpkg.com/
 - Pop-up dialog
 - Consider the server-side logic. (Whether data should be placed in local storage or server-side)
 - Separation of server-side and front-end logic
+
+## Data that needs to be saved
+- Statistics data
+- Game data in play (For browser reload)
+- Game data in play (For export and inport)
