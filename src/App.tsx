@@ -251,10 +251,12 @@ class Nerdle implements GameLogicInterface {
           // Check the result
           const resultArray = this.state.squares[this.state.activeSquare[0]]
           const values = resultArray.map(square => square.value as string)
-          if ( this.inputCheck(values) ) {
-            this.state.squares[this.state.activeSquare[0]][this.state.activeSquare[1]].class[0] = ''
-            this.setStyle(resultArray)
+          if ( !this.inputCheck(values) ) {
+            return true
           }
+          this.state.squares[this.state.activeSquare[0]][this.state.activeSquare[1]].class[0] = ''
+          this.setStyle(resultArray)
+
           if (values.join('') == this.result) {
             // won
             this.state.isFinished = true
