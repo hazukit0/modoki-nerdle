@@ -39,4 +39,10 @@ https://yarnpkg.com/
 
 ## Server Side Data (Cloud Firestore)
 - Answer to the question
+```
+Data definition
+- results
+    - yyyymmdd (date)
+        - result: String # equation '2*3+5=11'
+```
 - Game data in play (For export and inport)
