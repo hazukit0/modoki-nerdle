@@ -33,8 +33,10 @@ https://yarnpkg.com/
 - Consider the server-side logic. (Whether data should be placed in local storage or server-side)
 - Separation of server-side and front-end logic
 
-## Data that needs to be saved
-- Statistics data
+## Local Storage Data
 - Game data in play (For browser reload)
-- Game data in play (For export and inport)
+
+## Server Side Data (Cloud Firestore)
 - Answer to the question
+- Statistics data
+- Game data in play (For export and inport)
