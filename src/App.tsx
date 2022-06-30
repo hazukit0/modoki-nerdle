@@ -3,6 +3,39 @@ import { useState } from 'react'
 import logo from './logo.svg';
 import './App.css';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore, CollectionReference, collection, documentId, DocumentData, getDocs, query, limit, where } from 'firebase/firestore'
+import 'firebase/firestore';
+import firebase from "firebase/compat/app"
+
+// todo split source file
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const firestore = getFirestore();
+
+// create collection for firebase
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(firestore, collectionName) as CollectionReference<T>
+}
+// result collection
+const resultsCol = createCollection<DocumentData>('results')
+
+
 // Square state type
 type SquareState = {
   value: string
@@ -151,6 +184,8 @@ interface GameLogicInterface {
   operations : string[][]
   // status message
   message : string
+  // Init
+  initialize() : boolean
   // Change active position
   clickBoard(i: number, j:number) : boolean
   // Click on the operation button
@@ -160,6 +195,7 @@ interface GameLogicInterface {
 // Application start point
 const App = () => {
   var logic = new Nerdle;
+  logic.initialize()
   return (
     <Game logic={logic}/>
   )
@@ -176,7 +212,6 @@ export default App;
 // GameLogicInterface implementation
 // Replacing here changes the logic of the game
 //////////////////////////////////////////////////////////////////////////////
-
 // html class
 const CLASS_ACTIVE = 'active'
 // message
@@ -190,14 +225,7 @@ class Nerdle implements GameLogicInterface {
   // todo forgot to color the control buttons
   operations = [['1','2','3','4','5','6','7','8','9','0'],['+','-','*','/','='],['Enter','Delete']]
   state = {
-    squares: [
-      [{value: '', class: [CLASS_ACTIVE],}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}], 
-      [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
-      [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
-      [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
-      [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
-      [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
-    ],
+    squares: [],
     isFinished: false,
     activeSquare: [0,0]
   } as GameState
@@ -206,6 +234,42 @@ class Nerdle implements GameLogicInterface {
   result = '2*3+5=11'
   // resutlts = ['2*3+5=11','3*2+5=11','5+3*2=11']
   message = ''
+  
+  // initialize member
+  initialize() : boolean {
+    this.getResult()
+    this.clearState()
+    return true
+  }
+  
+  // crear state
+  clearState() : void {
+    this.state = {
+      squares: [
+        [{value: '', class: [CLASS_ACTIVE],}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}], 
+        [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
+        [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
+        [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
+        [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
+        [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
+      ],
+      isFinished: false,
+      activeSquare: [0,0]
+    } as GameState
+  }
+  
+  // (async) get result from server
+  async getResult() {
+    var now = new Date();
+    var yyyymmdd = now.toISOString().slice(0,10).replace(/-/g,"");
+    // get one result before today
+    const q = query(resultsCol, where(documentId(), '<=', yyyymmdd), limit(1));
+    const resultDocs = await getDocs(q)
+    resultDocs.docs.forEach((resultDoc) => {
+      const result = resultDoc.data()
+      this.result = result.result
+    })
+  }
   
   // click on the grit square
   clickBoard(i: number, j:number) : boolean {
