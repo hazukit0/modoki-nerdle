@@ -35,8 +35,8 @@ https://yarnpkg.com/
 
 ## Local Storage Data
 - Game data in play (For browser reload)
+- Statistics data
 
 ## Server Side Data (Cloud Firestore)
 - Answer to the question
-- Statistics data
 - Game data in play (For export and inport)
