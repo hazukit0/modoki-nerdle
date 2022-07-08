@@ -17,7 +17,7 @@ export type GameState = {
 export interface GameLogicInterface {
   state : GameState
   // operation buttons
-  operations : string[][]
+  operations : SquareState[][]
   // status message
   message : string
   // Init

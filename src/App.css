@@ -10,16 +10,6 @@
     margin-bottom: 8px;
 }
 
-.game-board .square.green {
-    background: #398874;
-}
-
-.game-board .square.black {
-    background: #000;
-}
-.game-board .square.purple {
-    background: #820480;
-}
 .game-board .square {
     background: #989484;
     border: 2px solid #989484;
@@ -39,7 +29,7 @@
 
 .game-operation-bord .square {
     background: #e2e8f0;
-    border: 2px solid #e5e7eb;
+    border: 0px;
     float: left;
     font-size: 1.125rem;
     font-weight: bold;
@@ -48,7 +38,7 @@
     margin-right: 4px;
     margin-top: 4px;
     padding: 0px 13px 0px 13px;
-	min-width: 40px;
+    min-width: 40px;
     text-align: center;
     color: #000;
     border-radius: 5px;
@@ -75,4 +65,23 @@
 
 .game-info {
     margin-left: 20px;
+}
+
+
+.square.green {
+    background: #398874;
+    color: #fff;
+    border: 0;
+}
+
+.square.black {
+    background: #000;
+    color: #fff;
+    border: 0;
+}
+
+.square.purple {
+    background: #820480;
+    color: #fff;
+    border: 0;
 }
