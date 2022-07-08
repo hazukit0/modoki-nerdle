@@ -40,8 +40,8 @@ Data definition
 - Color the numeric control panel
 - Create a callout for game message
 - Pop-up dialog
-- Consider the server-side logic. (Whether data should be placed in local storage or server-side)
-- Separation of server-side and front-end logic
+- Read and save data to local storage
+- Statistics function
 - Game data export and inport
 
 ## Local Storage Data
