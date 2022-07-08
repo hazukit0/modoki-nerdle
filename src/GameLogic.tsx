@@ -50,11 +50,17 @@ const MESSAGE_ERROR_NO_COMPUTE = 'That guess doesn\'t compute!'
 const MESSAGE_ERROR_BLANKS     = 'That guess doesn\'t compute - Please foll in the blanks!'
 const MESSAGE_YOU_WON          = 'You won!'
 const MESSAGE_YOU_LOST         = 'You lost, the calculation was '
+// css class
+const CSS_CLASS_SQUARE_GREEN = 'green'
+const CSS_CLASS_SQUARE_PURPLE = 'purple'
+const CSS_CLASS_SQUARE_BLACK = 'black'
+
 
 // nerdle game logic
 class Nerdle implements GameLogicInterface {
-  // todo forgot to color the control buttons
-  operations = [['1','2','3','4','5','6','7','8','9','0'],['+','-','*','/','='],['Enter','Delete']]
+  // oparations button
+  operations = [] as SquareState[][]
+  // game state
   state = {
     squares: [],
     isFinished: false,
@@ -70,14 +76,16 @@ class Nerdle implements GameLogicInterface {
   initialize() : boolean {
     this.getResult()
     this.clearState()
+    this.clearOperations()
     return true
   }
   
   // crear state
   clearState() : void {
+    // todo generate params automatically
     this.state = {
       squares: [
-        [{value: '', class: [CLASS_ACTIVE],}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}], 
+        [{value: '', class: [CLASS_ACTIVE]}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}], 
         [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
         [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
         [{value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']},{value: '', class: ['']}, {value: '', class: ['']}, {value: '', class: ['']}],
@@ -87,6 +95,16 @@ class Nerdle implements GameLogicInterface {
       isFinished: false,
       activeSquare: [0,0]
     } as GameState
+  }
+  
+  // crear state
+  clearOperations() : void {
+    // todo generate params automatically
+    // operations = [['1','2','3','4','5','6','7','8','9','0'],['+','-','*','/','='],['Enter','Delete']]
+    this.operations = [
+    [{value: '1', class: ['']},{value: '2', class: ['']},{value: '3', class: ['']},{value: '4', class: ['']},{value: '5', class: ['']},{value: '6', class: ['']},{value: '7', class: ['']},{value: '8', class: ['']},{value: '9', class: ['']},{value: '0', class: ['']}],
+    [{value: '+', class: ['']},{value: '-', class: ['']},{value: '*', class: ['']},{value: '/', class: ['']},{value: '=', class: ['']}],
+    [{value: 'Enter', class: ['']},{value: 'Delete', class: ['']}]]
   }
   
   // (async) get result from server
@@ -123,8 +141,8 @@ class Nerdle implements GameLogicInterface {
   clickOperationBoard(operation: string) : boolean {
     if (this.state.isFinished) return false
     this.message = ''
-    const is_inputs = this.operations[0].includes(operation) || this.operations[1].includes(operation)
-    const is_operators = this.operations[2].includes(operation)
+    const is_inputs = this.operations[0].find(e => e.value === operation) || this.operations[1].find(e => e.value === operation)
+    const is_operators = this.operations[2].find(e => e.value === operation)
     
     if (!is_inputs && !is_operators) return false
     
@@ -217,14 +235,30 @@ class Nerdle implements GameLogicInterface {
   private setStyle(resultArray: SquareState[]) {
     for (var i = 0; i < resultArray.length; i++) {
       const v = resultArray[i]
+      let operation = this.operations[0].find(e => e.value === v.value) || this.operations[1].find(e => e.value === v.value)
+      let operationClass = operation ? operation.class[0] : ''
+      let squareClass = ''
+      
       if (v.value == this.result[i]) {
-        v.class = ['green']
+        squareClass = CSS_CLASS_SQUARE_GREEN
+        operationClass = CSS_CLASS_SQUARE_GREEN
       } else  if (this.result.indexOf(v.value) >= 0) {
-        v.class = ['purple']
+        squareClass = CSS_CLASS_SQUARE_PURPLE
+        if (operationClass != CSS_CLASS_SQUARE_GREEN) {
+          operationClass = CSS_CLASS_SQUARE_PURPLE
+        }
       } else {
-        v.class = ['black']
+        squareClass = CSS_CLASS_SQUARE_BLACK
+        operationClass = CSS_CLASS_SQUARE_BLACK
+      }
+      
+      v.class[0] = squareClass
+      if (operation) {
+        operation.class[0] = operationClass
       }
     }
+    
+    
   }
   
 }

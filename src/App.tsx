@@ -46,35 +46,35 @@ const Board = (props: BoardProps) => {
 
 // OperationButton props type
 type OperationButtonProps = {
-  value: string
+  operations: SquareState
   onClick: () => void
 }
 
 // OperationButton component
 const OperationButton = (props: OperationButtonProps) => (
-  <button className='square' onClick={props.onClick} >
-    {props.value}
+  <button className={`square ${props.operations.class.filter(v => v).join(' ')}`} onClick={props.onClick}>
+    {props.operations.value}
   </button>
 )
 
 // OperationBoard props type
 type OperationBoardProps = {
-  buttons: string[][]
+  operations: SquareState[][]
   onClick: (i: string) => void
 }
 
 // OperationBoard component
 const OperationBoard = (props: OperationBoardProps) => {
-  const renderButton = (i: number,j: number) => (
-    <OperationButton value={props.buttons[i][j]} onClick={() => props.onClick(props.buttons[i][j])} key={i.toString()+'-'+j.toString()}/>
+  const renderOperations = (i: number,j: number) => (
+    <OperationButton operations={props.operations[i][j]} onClick={() => props.onClick(props.operations[i][j].value)} key={i.toString()+'-'+j.toString()}/>
   )
 
   return (
     <div>
-    {props.buttons.map((row, i) => (
+    {props.operations.map((row, i) => (
       <div className='board-row' key={i.toString()}>
       {row.map((column, j) => (
-        renderButton(i,j)
+        renderOperations(i,j)
       ))}
       </div>
     ))}
@@ -128,7 +128,7 @@ const Game = (props: { logic : GameLogicInterface }) => {
         <Board squares={state.squares} onClick={handleClickBoard} />
       </div>
       <div className='game-operation-bord'>
-        <OperationBoard buttons={props.logic.operations} onClick={handleClickOperationBoard} />
+        <OperationBoard operations={props.logic.operations} onClick={handleClickOperationBoard} />
       </div>
     </div>
   )
